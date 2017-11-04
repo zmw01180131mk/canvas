@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px
+		}
+		video{
+			width: 400px;
+			height: 400px;
+			position: relative;
+		}
+		progress{
+			height: 3px;
+			width: 400px;
+			position: absolute;
+			left: 0;
+			top:310px;
+		}
+	</style>
+</head>
+<body>
+	<video id="video" src="./video.mp4" loop>
+		该浏览器不支持video
+	</video>
+	<progress id="pro" value="0" max="813"></progress>
+	<br>
+	<span>
+		<input id="btn" type="button" value="播放">
+	</span>
+	<span>0</span>秒/<span>0</span>秒
+	音量：<input type="range" id="range">
+	播放速度：<button>增加</button>
+			  <button>减少</button>
+
+	<script type="text/javascript">
+		var video=document.getElementById('video');
+		var btn=document.getElementById('btn');
+		var pro=document.getElementById('pro');
+		var span=document.getElementsByTagName('span');
+		var range=document.getElementById('range');
+		var btns=document.getElementsByTagName('button');
+		btn.onclick=function(){
+			if(video.paused){
+				video.play();
+				this.value="暂停";
+				// console.log(video.volume);
+				// console.log(range.value);
+				console.log(video.playbackRate);
+				setInterval(function(){
+					pro.value=parseInt(video.currentTime);
+					span[1].innerText=parseInt(video.currentTime);
+					span[2].innerText=parseInt(video.duration);
+					video.volume=range.value*0.01;
+				},1000);
+			}else{
+				video.pause();
+				this.value="播放";
+			}	
+		}
+		btns[0].onclick=function(){
+			video.playbackRate+=0.1;
+		}
+		btns[1].onclick=function(){
+			video.playbackRate-=0.1;
+		}
+	</script>
+</body>
+</html>
